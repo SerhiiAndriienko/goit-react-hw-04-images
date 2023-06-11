@@ -10,10 +10,11 @@ export default function ImageGallery({ images, load }) {
 
   const handleImageClick = image => {
     setSelectedImage(image);
-    document.addEventListener('keydown', this.handleKeyDown);
   };
-  const handleModalClose = () => {
-    this.setState({ selectedImage: null });
+  const handleModalClose = e => {
+    if (e.target.tagName === 'DIV') {
+      setSelectedImage(null);
+    }
   };
   return (
     <div>
@@ -30,7 +31,11 @@ export default function ImageGallery({ images, load }) {
           })}
       </ul>
       {selectedImage && (
-        <Modal image={selectedImage} onClose={handleModalClose}></Modal>
+        <Modal
+          setSelectedImage={setSelectedImage}
+          image={selectedImage}
+          onClose={handleModalClose}
+        ></Modal>
       )}
       {load && <Loader />}
     </div>

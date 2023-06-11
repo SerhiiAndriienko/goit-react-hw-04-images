@@ -1,37 +1,29 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import css from './modal.module.css';
 
-export default class Modal extends Component {
-  state = {
-    showModal: true,
-  };
+export default function Modal({ onClose, image, setSelectedImage }) {
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line
+  }, []);
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-  handleKeyDown = event => {
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+    // eslint-disable-next-line
+  }, []);
+  const handleKeyDown = event => {
     if (event.key === 'Escape') {
-      this.props.onClose();
+      setSelectedImage(null);
     }
   };
-  render() {
-    return (
-      this.state.showModal && (
-        <div className={css.Overlay} onClick={this.props.onClose}>
-          <div className={css.Modal}>
-            <img src={this.props.image.largeImageURL} alt="" width={'100%'} />
-          </div>
-        </div>
-      )
-    );
-  }
+
+  return (
+    <div className={css.Overlay} onClick={onClose}>
+      <div className={css.Modal}>
+        <img src={image.largeImageURL} alt="" width={'100%'} />
+      </div>
+    </div>
+  );
 }

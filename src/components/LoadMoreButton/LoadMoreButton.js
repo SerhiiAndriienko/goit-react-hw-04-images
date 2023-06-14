@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './LoadMore.module.css';
+import PropTypes from 'prop-types';
 
 function LoadMoreButton({ onClick }) {
   return (
@@ -9,3 +10,7 @@ function LoadMoreButton({ onClick }) {
   );
 }
 export default LoadMoreButton;
+
+LoadMoreButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
